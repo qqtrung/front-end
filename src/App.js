@@ -2,7 +2,7 @@ import './App.css';
 
 import React from "react";
 import { Grid, Typography, Paper } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import UserDetail from "./components/UserDetail";
@@ -26,6 +26,7 @@ const App = (props) => {
           <Grid item sm={9}>
             <Paper className="main-grid-item">
               <Routes>
+                <Route path="/" element={<Navigate to="/users" />} />
                 <Route
                   path="/users/:userId"
                   element={<UserDetail />}

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Card, CardContent, CardMedia } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 
 import "./styles.css";
-import models from "../../modelData/models";
+import fetchModel from "../../lib/fetchModelData";
 import images from "../../images";
 
 /**
@@ -11,11 +11,21 @@ import images from "../../images";
  */
 function UserPhotos() {
   const { userId } = useParams();
-  const photos = models.photoOfUserModel(userId);
-  const user = models.userModel(userId);
+  const [photos, setPhotos] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    Promise.all([
+      fetchModel(`/photosOfUser/${userId}`),
+      fetchModel(`/user/${userId}`)
+    ]).then(([photosData, userData]) => {
+      setPhotos(photosData || []);
+      setUser(userData);
+    });
+  }, [userId]);
 
   if (!user) {
-    return <Typography variant="body1">User not found</Typography>;
+    return <Typography variant="body1">Loading...</Typography>;
   }
 
   return (

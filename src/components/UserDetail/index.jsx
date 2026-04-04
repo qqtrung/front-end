@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 
 import "./styles.css";
-import models from "../../modelData/models";
+import fetchModel from "../../lib/fetchModelData";
 
 /**
  * Define UserDetail, a React component of Project 4.
  */
 function UserDetail() {
   const { userId } = useParams();
-  const user = models.userModel(userId);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetchModel(`/user/${userId}`).then(data => {
+      setUser(data);
+    });
+  }, [userId]);
 
   if (!user) {
-    return <Typography variant="body1">User not found</Typography>;
+    return <Typography variant="body1">Loading...</Typography>;
   }
 
   return (
