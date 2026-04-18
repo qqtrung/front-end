@@ -1,13 +1,19 @@
-import './App.css';
+import "./App.css";
 
 import React from "react";
 import { Grid, Typography, Paper } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
+import UserComments from "./components/UserComments";
 
 const App = (props) => {
   return (
@@ -27,23 +33,17 @@ const App = (props) => {
             <Paper className="main-grid-item">
               <Routes>
                 <Route path="/" element={<Navigate to="/users" />} />
-                <Route
-                  path="/users/:userId"
-                  element={<UserDetail />}
-                />
-                <Route
-                  path="/photos/:userId"
-                  element={<UserPhotos />}
-                />
+                <Route path="/users/:userId" element={<UserDetail />} />
+                <Route path="/photos/:userId" element={<UserPhotos />} />
                 <Route path="/users" element={<UserList />} />
+                <Route path="/comments/:userId" element={<UserComments />} />
               </Routes>
             </Paper>
           </Grid>
-
         </Grid>
       </div>
     </Router>
   );
-}
+};
 
 export default App;

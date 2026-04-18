@@ -16,8 +16,8 @@ function UserPhotos() {
 
   useEffect(() => {
     Promise.all([
-      fetchModel(`/photosOfUser/${userId}`),
-      fetchModel(`/user/${userId}`)
+      fetchModel(`/photo/${userId}`),
+      fetchModel(`/user/${userId}`),
     ]).then(([photosData, userData]) => {
       setPhotos(photosData || []);
       setUser(userData);
@@ -30,7 +30,9 @@ function UserPhotos() {
 
   return (
     <div className="user-photos">
-      <Typography variant="h4" className="user-photos-title">Photos of {user.first_name} {user.last_name}</Typography>
+      <Typography variant="h4" className="user-photos-title">
+        Photos of {user.first_name} {user.last_name}
+      </Typography>
       {photos.map((photo) => (
         <Card key={photo._id} className="photo-card">
           <CardMedia
@@ -43,17 +45,26 @@ function UserPhotos() {
             <Typography variant="body2" className="photo-date">
               {new Date(photo.date_time).toLocaleString()}
             </Typography>
-            <Typography variant="h6" className="comments-title">Comments:</Typography>
-            {photo.comments && photo.comments.map((comment) => (
-              <div key={comment._id} className="comment-item">
-                <Typography variant="body2" className="comment-header">
-                  <Link to={`/users/${comment.user._id}`} className="comment-user-link">
-                    {comment.user.first_name} {comment.user.last_name}
-                  </Link> - {new Date(comment.date_time).toLocaleString()}
-                </Typography>
-                <Typography variant="body1" className="comment-text">{comment.comment}</Typography>
-              </div>
-            ))}
+            <Typography variant="h6" className="comments-title">
+              Comments:
+            </Typography>
+            {photo.comments &&
+              photo.comments.map((comment) => (
+                <div key={comment._id} className="comment-item">
+                  <Typography variant="body2" className="comment-header">
+                    <Link
+                      to={`/users/${comment.user._id}`}
+                      className="comment-user-link"
+                    >
+                      {comment.user.first_name} {comment.user.last_name}
+                    </Link>{" "}
+                    - {new Date(comment.date_time).toLocaleString()}
+                  </Typography>
+                  <Typography variant="body1" className="comment-text">
+                    {comment.comment}
+                  </Typography>
+                </div>
+              ))}
           </CardContent>
         </Card>
       ))}
