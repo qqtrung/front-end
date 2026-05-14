@@ -5,7 +5,7 @@
  *
  */
 function fetchModel(url) {
-  return fetch(`https://szwv8w-8081.csb.app/api${url}`)
+  return fetch(`https://x7cz3z-8081.csb.app/api${url}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -17,5 +17,6 @@ function fetchModel(url) {
       return null;
     });
 }
+
 
 export default fetchModel;
